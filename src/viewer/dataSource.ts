@@ -56,13 +56,14 @@ export function buildParallelMap(
   let cursor = 0;
   for (const cue of primary) {
     const center = cue.start + cue.duration / 2;
-    while (
-      cursor + 1 < target.length &&
-      Math.abs(target[cursor + 1].start - center) <= Math.abs(target[cursor].start - center)
-    ) {
+    let next = target[cursor + 1];
+    let curr = target[cursor]!;
+    while (next && Math.abs(next.start - center) <= Math.abs(curr.start - center)) {
       cursor += 1;
+      curr = next;
+      next = target[cursor + 1];
     }
-    map[cue.id] = target[cursor].text;
+    map[cue.id] = curr.text;
   }
   return map;
 }
