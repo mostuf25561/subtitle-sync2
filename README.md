@@ -1,5 +1,6 @@
 # Clean Slate Project
 
+
 create an empty project with empty README.md
 
 This project was built with [Lovable](https://lovable.dev).
