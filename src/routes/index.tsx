@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Languages, LayoutList, Rows3, Youtube } from "lucide-react";
+import { Languages, LayoutList, Rows3, Volume2, Youtube } from "lucide-react";
 import { useState } from "react";
 
 import { ControlRibbonView } from "@/viewer/views/ControlRibbonView";
@@ -103,6 +103,15 @@ function ViewerPage() {
           >
             <Languages className="size-4" />
             {v.showTranslation ? "Parallel translation on" : "Parallel translation off"}
+          </button>
+          <button
+            type="button"
+            aria-pressed={v.speechEnabled}
+            onClick={v.onToggleSpeech}
+            className="ms-2 inline-flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-sm text-foreground/80 hover:border-accent/60"
+          >
+            <Volume2 className="size-4" />
+            {v.speechEnabled ? "Read aloud on" : "Read aloud off"}
           </button>
         </section>
 

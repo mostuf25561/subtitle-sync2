@@ -61,6 +61,23 @@ export function useViewerCoordinator() {
   const primaryLang = host.languages.find((l) => l.code === primaryCode);
   const targetLang = host.languages.find((l) => l.code === targetCode);
 
+  const [speechEnabled, setSpeechEnabled] = useState(false);
+  useEffect(() => {
+    if (!speechEnabled || !isPlaying || !activeCueId) return;
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    const cue = cues.find((c) => c.id === activeCueId);
+    if (!cue) return;
+    const u = new SpeechSynthesisUtterance(cue.text);
+    u.lang = primaryCode;
+    u.rate = playbackRate;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  }, [activeCueId, speechEnabled, isPlaying]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if ((!speechEnabled || !isPlaying) && typeof window !== "undefined" && "speechSynthesis" in window)
+      window.speechSynthesis.cancel();
+  }, [speechEnabled, isPlaying]);
+
   return {
     host,
     cues,
@@ -85,6 +102,8 @@ export function useViewerCoordinator() {
     onToggleCaptions: () => setCaptionsEnabled((c) => !c),
     onToggleTheater: () => setTheaterMode((t) => !t),
     onToggleTranslation: () => setShowTranslation((s) => !s),
+    speechEnabled,
+    onToggleSpeech: () => setSpeechEnabled((s) => !s),
     onSelectCue: (cue: SubtitleCue) => setCurrentTime(cue.start),
   } as const;
 }
