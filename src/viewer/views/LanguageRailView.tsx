@@ -32,7 +32,7 @@ export function LanguageRailView({
             onClick={() => onSelect(lang.code)}
             className={`rounded-full border px-3 py-1.5 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${
               isSelected
-                ? "border-accent bg-accent/20 text-accent-foreground"
+                ? "border-accent bg-accent/20 text-accent"
                 : "border-border bg-card/50 text-foreground/80 hover:border-accent/50"
             }`}
           >
